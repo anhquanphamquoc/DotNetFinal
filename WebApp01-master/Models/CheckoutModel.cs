@@ -15,5 +15,6 @@ namespace WebApp01.Models
         [Required, MinLength(9, ErrorMessage = "Vui lòng nhập số điện thoại hợp lệ")]
         public string Phone { get; set; }
         public string? Note { get; set; }
+        public bool IsShipped { get; set; } 
     }
 }

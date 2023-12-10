@@ -49,7 +49,9 @@ namespace WebApp01.Controllers
                 IdentityResult result = await _userManager.CreateAsync(newUser,user.Password);
                 if (result.Succeeded)
                 {
-                    TempData["success"] = "Tạo tài khoản thành công";
+					await _userManager.AddToRoleAsync(newUser, "Customer");
+
+					TempData["success"] = "Tạo tài khoản thành công";
                     return Redirect("/account/login");
                 } 
                 foreach(IdentityError error in result.Errors)
