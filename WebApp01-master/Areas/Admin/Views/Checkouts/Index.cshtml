@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CheckoutModel>
+@{
+    ViewData["title"] = "Hiển thị đơn hàng";
+}
+<h4>Danh sách danh mục</h4>
+<a asp-action="Create" asp-controller="Checkouts">Thêm danh đơn hàng mới</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Note</th>
+            <th scope="col">Trạng thái</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Address</td>
+                <td>@Html.Raw(@item.City)</td>
+                <td>@Html.Raw(@item.Phone)</td>
+                <td>@Html.Raw(@item.Note)</td>
+                <td>
+                    @if (@item.IsShipped == true)
+                    {
+                        <span class="text-area text-success">Đã gửi hàng</span>
+                    }
+                    else
+                    {
+                        <span class="text-area text-success">Chưa gửi hàng</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="UpdateStatus" asp-controller="Checkouts" method="post">
+                        <input type="hidden" name="checkoutId" value="@item.Id" />
+                        <button type="submit" name="isShipped" value="true" class="btn btn-warning btn-sm">Xác nhận</button>
+                        <button type="submit" name="isShipped" value="false" class="btn btn-danger btn-sm">Hủy</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
