@@ -40,7 +40,7 @@ namespace WebApp01.Areas.Admin.Controllers
 
             return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
         }
-        public async Task<IActionResult> Delete(int Id)
+        public async Task<IActionResult> Delete(string Id)
         {
             CheckoutModel checkout = await _dataContext.Checkouts.FindAsync(Id);
 
