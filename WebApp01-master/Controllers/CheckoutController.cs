@@ -28,7 +28,20 @@ namespace WebApp01.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CheckoutModel checkout)
         {
-            if(ModelState.IsValid)
+            string ProductsName = TempData["ProductsName"] as string;
+
+            // Kiểm tra xem TempData có tồn tại không
+            if (string.IsNullOrEmpty(ProductsName))
+            {
+                TempData["error"] = "Không có thông tin sản phẩm";
+                return RedirectToAction("Index", "Cart"); // Hoặc chuyển hướng đến một trang thông báo lỗi khác
+            }
+
+            checkout.ProductsName = ProductsName;
+
+            // Xóa thông tin sản phẩm từ TempData để tránh giữ lại dữ liệu không cần thiết
+            TempData.Remove("ProductsName");
+            if (ModelState.IsValid)
             {
                 _dataContext.Add(checkout);
                 await _dataContext.SaveChangesAsync();
@@ -51,4 +64,6 @@ namespace WebApp01.Controllers
             return RedirectToAction("Contact", "Mail");
         }
     }
+
+
 }

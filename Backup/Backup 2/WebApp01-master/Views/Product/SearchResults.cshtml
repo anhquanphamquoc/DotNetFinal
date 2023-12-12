@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ProductModel>
+
+<div class="col-sm-3">
+    @Html.Partial("_SidebarPartial")
+</div>
+
+<div class="col-sm-9 padding-right">
+    <div class="features_items">
+        <!--features_items-->
+        <h2 class="title text-center">Search Results</h2>
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    @if (!String.IsNullOrEmpty(ViewBag.SearchTerm) && item.Name.IndexOf(ViewBag.SearchTerm, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="~/images/products/@item.Image" alt="@item.Name" width="50%" />
+                                        <h2>@item.Name</h2>
+                                        <p><strong>Price:</strong> @item.Price</p>
+                                        <p><strong>Category:</strong> @item.Category.Name</p>
+                                        <p><strong>Brand:</strong> @item.Brand.Name</p>
+                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    </div>
+
+                                    <div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Id">
+                                                <h2>@item.Name</h2>
+                                                <p><strong>Category:</strong> @item.Category.Name</p>
+                                                <p><strong>Brand:</strong> @item.Brand.Name</p>
+                                                <p><strong>Price:</strong> @item.Price</p>
+                                            </a>
+                                            <a asp-action="Add" asp-controller="Cart" asp-route-Id="@item.Id" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <p>No results found.</p>
+            </div>
+        }
+    </div><!--features_items-->
+</div>

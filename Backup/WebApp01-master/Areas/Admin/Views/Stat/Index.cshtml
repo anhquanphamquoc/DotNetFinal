@@ -1,0 +1,23 @@
+﻿
+@{
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <h2>Thống kê dữ liệu</h2>
+        <div class="table-responsive small">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Số lượng tài khoản</th>
+                        <th scope="col">Số lượng đơn hàng</th>
+                        <th scope="col">Số lượng sách</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@ViewBag.TotalCustomers</td>
+                        <td>@ViewBag.TotalOrders</td>
+                        <td>@ViewBag.TotalBooks</td>
+                </tbody>
+            </table>
+        </div>
+    </main>
+}

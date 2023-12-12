@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApp01.Models;
 using WebApp01.Repository;
 
 namespace WebApp01.Areas.Admin.Controllers
@@ -39,5 +40,23 @@ namespace WebApp01.Areas.Admin.Controllers
 
             return RedirectToAction("Index"); // Chuyển hướng về trang danh sách đơn hàng
         }
+        public async Task<IActionResult> Delete(int Id)
+        {
+            CheckoutModel checkout = await _dataContext.Checkouts.FindAsync(Id);
+
+            if (checkout != null)
+            {
+                _dataContext.Checkouts.Remove(checkout);
+                await _dataContext.SaveChangesAsync();
+                TempData["success"] = "Đã xóa đơn hàng";
+            }
+            else
+            {
+                TempData["error"] = "Không tìm thấy đơn hàng.";
+            }
+
+            return RedirectToAction("Index");
+        }
     }
+
 }
